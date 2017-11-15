@@ -1,0 +1,20 @@
+source 'https://github.com/CocoaPods/Specs.git' 
+platform :ios, '8.1'
+target "Pugcaracas" do
+pod 'Firebase'
+pod 'SDWebImage', '~> 4.0’ 
+pod 'Firebase/Core' 
+pod 'Firebase/Database' 
+pod 'Firebase/AdMob'
+pod 'Firebase/Analytics'
+pod 'Firebase/Auth'
+pod 'Firebase/Crash'
+pod 'Firebase/Database'
+pod 'Firebase/DynamicLinks'
+pod 'Firebase/Invites'
+pod 'Firebase/Messaging'
+pod 'Firebase/Performance'
+pod 'Firebase/RemoteConfig'
+pod 'Firebase/Storage'
+project 'Pugcaracas.xcodeproj'
+end 

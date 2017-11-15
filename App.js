@@ -4,54 +4,150 @@
  * @flow
  */
 
-import React, { Component } from 'react';
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  View
+import React from 'react';
+import { 
+  AppRegistry,
+  ActivityIndicator, 
+  StyleSheet, 
+  Text, 
+  ImageBackground,
+  View 
 } from 'react-native';
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' +
-    'Cmd+D or shake for dev menu',
-  android: 'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
+import * as firebase from 'firebase';
+import { Input } from './components/Input';
+import { Button } from './components/Button';
+import { Dashboard } from './components/Dashboard';
 
-export default class App extends Component<{}> {
+export default class App extends React.Component {
+  state = {
+    email: '',
+    password: '',
+    authenticating: false,
+    user: null,
+    error: '',
+  }
+
+  componentWillMount() {
+    const firebaseConfig = {
+      apiKey: 'AIzaSyAOvRIlhGovNCCzRJcp_NQkRlsCqMTE3u0',
+      authDomain: 'pugcaracas-31ec4.firebaseapp.com',
+    }
+
+    firebase.initializeApp(firebaseConfig);
+  }
+
+  onPressSignIn() {
+    this.setState({
+      authenticating: true,
+    });
+
+    const { email, password } = this.state;
+
+    firebase.auth().signInWithEmailAndPassword(email, password)
+      .then(user => this.setState({
+        authenticating: false,
+        user,
+        error: '',
+      }))
+      .catch(() => {
+        // Login was not successful
+        firebase.auth().createUserWithEmailAndPassword(email, password)
+          .then(user => this.setState({
+            authenticating: false,
+            user,
+            error: '',
+          }))
+          .catch(() => this.setState({
+            authenticating: false,
+            user: null,
+            error: 'Autentificación Fallida',
+          }))
+      })
+  }
+
+  onPressLogOut() {
+    firebase.auth().signOut()
+      .then(() => {
+        this.setState({
+          email: '',
+          password: '',
+          authenticating: false,
+          user: null,
+        })
+      }, error => {
+        console.error('Error de registro', error);
+      });
+  }
+
+  renderCurrentState() {
+    if (this.state.authenticating) {
+      return (
+        <View style={styles.form}>
+          <ActivityIndicator size='large' />
+        </View>
+      )
+    }
+
+    if (this.state.user !== null) {
+      return (
+        <View style={styles.form}>
+          <Text>Registrado</Text>
+          <Button onPress={ () => this.onPressLogOut()}>Salir</Button>
+          <Dashboard />
+        </View>
+      )
+    }
+
+    return (
+      <View style={styles.form}>
+        <Input
+          placeholder='Registre su Correo...'
+          label='Email'
+          onChangeText={email => this.setState({ email })}
+          value={this.state.email}
+        />
+        <Input
+          placeholder='Registre su contraseña...'
+          label='Contraseña'
+          secureTextEntry
+          onChangeText={password => this.setState({ password })}
+          value={this.state.password}
+        />
+        <Button onPress={() => this.onPressSignIn()}>Entrar</Button>
+        <Text>{this.state.error}</Text>
+      </View>
+    )
+
+  }
+
   render() {
     return (
+      <ImageBackground source={{uri:'/Users/roqueleal/pugcaracas/components/images/fondo.jpg'}}style={styles.container}>      
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit App.js
-        </Text>
-        <Text style={styles.instructions}>
-          {instructions}
-        </Text>
+        {this.renderCurrentState()}
       </View>
+      </ImageBackground>
     );
   }
 }
-
+  
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    padding: 20,
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    backgroundColor: 'transparent',
+    
+    
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+  form: {
+    flex: 1,
+    
+  }
 });
+
+
+AppRegistry.registerComponent('pugcaracas', () => App);
