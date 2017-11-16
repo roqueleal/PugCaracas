@@ -3,7 +3,8 @@ import {
     View, 
     StyleSheet, 
     Text, 
-    TextInput
+    TextInput,
+    TouchableOpacity,
  } from 'react-native';
 
 const Input = ({ label, value, onChangeText, placeholder, secureTextEntry }) => {

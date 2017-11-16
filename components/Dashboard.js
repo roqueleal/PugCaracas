@@ -3,29 +3,17 @@ import {
   Text,
   View,
   StyleSheet,
+  TouchableHighlight
 } from 'react-native';
 
-const dashboard = () => {
+class dashboard extends Component {
+  render(){
     return (
-      <View style={styles.container}>
-        <Text>
-          Hola!
-        </Text>
-        <Text>
-          Este será nuestro dashboard
-        </Text>
+      <View>
+        <Text> Hola!</Text>
       </View>
     )
-  };
-
-const styles = StyleSheet.create({
-  container: { 
-    flex: 1, 
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-});
-
+  }
+}
 
 export { dashboard };

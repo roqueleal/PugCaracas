@@ -10,7 +10,8 @@
 		"firebase": "^4.6.2",
 		"pod": "^0.9.0",
 		"react": "16.0.0",
-		"react-native": "0.50.3"
+		"react-native": "0.50.3",
+		"react-navigation": "^1.0.0-beta.19"
 	},
 	"devDependencies": {
 		"babel-jest": "21.2.0",

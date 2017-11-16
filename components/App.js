@@ -17,9 +17,9 @@ import {
 } from 'react-native';
 
 import * as firebase from 'firebase';
-import { Input } from './components/Input';
-import { Button } from './components/Button';
-import { Dashboard } from './components/Dashboard';
+import { Input } from './Input';
+import { Button } from './Button';
+import { Dashboard } from './Dashboard';
 
 export default class App extends React.Component {
   state = {
@@ -105,7 +105,7 @@ export default class App extends React.Component {
     if (this.state.user !== null) {
       return (
         <View style={styles.form}>
-         <TouchableHighlight>Bienvenido</TouchableHighlight>
+         <Text>Bienvenido</Text>
           <Button
           onPress={ () => this.onPressLogOut()}>
           Salir</Button>
