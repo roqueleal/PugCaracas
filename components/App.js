@@ -13,13 +13,13 @@ import {
   ImageBackground,
   View,
   Alert,
-  TouchableHighlight
 } from 'react-native';
 
 import * as firebase from 'firebase';
 import { Input } from './Input';
 import { Button } from './Button';
 import { Dashboard } from './Dashboard';
+import { fromTopBottom } from './index';
 
 export default class App extends React.Component {
   state = {
@@ -105,7 +105,12 @@ export default class App extends React.Component {
     if (this.state.user !== null) {
       return (
         <View style={styles.form}>
-         <Text>Bienvenido</Text>
+         <ImageBackground source={{uri:'/Users/roqueleal/pugcaracas/components/images/quienes_somos.jpg'}}style={styles.container}>
+         <Button onPress={() => this.props.navigation.navigate('Dashboard', {
+           transition: 'fromTopBottom'})}>
+           <Text>Bienvenido</Text> 
+          </Button>
+          </ImageBackground>
           <Button
           onPress={ () => this.onPressLogOut()}>
           Salir</Button>
